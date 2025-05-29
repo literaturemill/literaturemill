@@ -1,49 +1,58 @@
 'use client';
-import Link from "next/link";
-import { useState } from "react";
+
+import Link from 'next/link';
+import { useState } from 'react';
+import AuthModal from './AuthModal';
 
 export default function Navbar() {
+  const categories = ['Fiction', 'Non-fiction', 'Poetry', 'Sci-Fi', 'Fantasy', 'Romance'];
+
   const [open, setOpen] = useState(false);
-  const categories = ["Fiction", "Non-fiction", "Poetry", "Sci-Fi", "Fantasy", "Romance"];
+  const [view, setView] = useState<'sign_in' | 'sign_up'>('sign_in');
+  const [openDropdown, setOpenDropdown] = useState(false);
 
   return (
     <nav className="w-full bg-gray-900 shadow-md p-4 flex justify-between items-center">
+      {/* Logo Section */}
+      <div className="flex items-center space-x-2">
+        <Link href="/">
+          <div className="flex items-center space-x-2 hover:opacity-80 transition duration-300">
+            <img
+              src="/windmill.jpg"
+              alt="Literature Mill logo"
+              className="w-8 h-8 rounded-sm object-cover shadow-sm"
+            />
+            <span className="text-2xl font-bold text-white">Literature Mill</span>
+          </div>
+        </Link>
+      </div>
 
-        {/* Logo Section Below */}
-<div className="flex items-center space-x-2">
-  <Link href="/"
-     className="flex items-center space-x-2 hover:opacity-80 transition duration-300">
-      <img
-        src="/windmill.jpg"
-        alt="Literature Mill logo"
-        className="w-8 h-8 rounded-sm object-cover shadow-sm"
-      />
-      <span className="text-2xl font-bold text-white-750">
-        Literature Mill
-      </span>
-  </Link>
-</div>
+      {/* Center Actions */}
+      <div className="flex gap-4 text-gray-300 relative">
+        <Link href="/publish" className="hover:text-indigo-400 transition">
+        Publish
+        </Link>
 
 
-      <div className="flex gap-4 text-gray-700 relative">
-        <button className="text-gray-200 hover:text-indigo-400">Publish</button>
-        <button className="text-gray-200 hover:text-indigo-400">Find a Story/Book</button>
 
-        {/* Dropdown */}
+        <button className="hover:text-indigo-400 transition" onClick={() => {}}>
+          Find a Story/Book
+        </button>
+
         <div className="relative">
           <button
-            onClick={() => setOpen(!open)}
-            className="text-gray-200 hover:text-indigo-400 transition duration-200 
-            focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
-            
+            onClick={() => setOpenDropdown(!openDropdown)}
+            className="hover:text-indigo-400 transition"
+          >
             Categories ▾
           </button>
-          {open && (
-            <ul className="absolute top-full mt-2 bg-white border shadow-md rounded p-2 w-40 z-50">
+
+          {openDropdown && (
+            <ul className="absolute top-full mt-2 bg-white border rounded p-2 z-50 text-black shadow-md w-48">
               {categories.map((cat) => (
                 <li
                   key={cat}
-                  className="p-1 hover:bg-indigo-50 cursor-pointer"
+                  className="p-2 hover:bg-indigo-100 cursor-pointer rounded"
                 >
                   {cat}
                 </li>
@@ -53,17 +62,35 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Auth Buttons */}
       <div className="flex gap-3">
-        <button className="border border-indigo-400 text-indigo-400 px-4 py-1 rounded-md hover:bg-indigo-500 hover:text-white transition
-        focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+        <button
+          onClick={() => {
+            setView('sign_in');
+            setOpen(true);
+          }}
+          className="border border-indigo-400 text-indigo-400 px-4 py-1 rounded-md hover:bg-indigo-500 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
           Sign In
         </button>
-        <button className="bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-1 rounded-md shadow-sm transition 
-        focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+        <button
+          onClick={() => {
+            setView('sign_up');
+            setOpen(true);
+          }}
+          className="bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-1 rounded-md shadow-sm transition focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
           Sign Up
         </button>
-
       </div>
+
+      {/* Modal */}
+      <AuthModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        initialView={view}
+      />
     </nav>
   );
 }
+

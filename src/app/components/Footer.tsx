@@ -1,4 +1,11 @@
+"use client";
+
+import { useState } from "react";
+import AuthModal from "./AuthModal";
+
 const Footer = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <footer className="bg-gray-900 text-gray-300 py-8 mt-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +25,13 @@ const Footer = () => {
               <li><a href="/" className="hover:text-white">Home</a></li>
               <li><a href="/publish" className="hover:text-white">Publish</a></li>
               <li><a href="/categories" className="hover:text-white">Categories</a></li>
-              <li><a href="/signin" className="hover:text-white">Sign In</a></li>
+              <li>
+              <button
+                onClick={() => setOpen(true)}
+                className="hover:text-white focus:outline-none">
+                Sign In
+              </button>
+            </li>
             </ul>
           </div>
 
@@ -26,9 +39,10 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-2">Connect</h4>
             <ul className="space-y-1 text-sm">
-              <li><a href="https://twitter.com/literaturemill" className="hover:text-white" target="_blank">Twitter</a></li>
-              <li><a href="https://instagram.com/literaturemill" className="hover:text-white" target="_blank">Instagram</a></li>
-              <li><a href="mailto:support@literaturemill.com" className="hover:text-white">support@literaturemill.com</a></li>
+              <li><a href="https://x.com/LiteratureMill" className="hover:text-white" target="https://x.com/LiteratureMill">X</a></li>
+              <li><a href="https://www.tiktok.com/@literaturemill?_t=ZN-8wb08W7fdLy&_r=1" className="hover:text-white" target="https://www.tiktok.com/@literaturemill?_t=ZN-8wb08W7fdLy&_r=1">TikTok</a></li>
+              <li><a href="https://www.instagram.com/literaturemill1?igsh=cmFjMGgyOTJzdWd0&utm_source=qr" className="hover:text-white" target="https://www.instagram.com/literaturemill1?igsh=cmFjMGgyOTJzdWd0&utm_source=qr">Instagram</a></li>
+              <li><a href="mailto:literaturemill@gmail.com" className="hover:text-white">literaturemill@gmail.com</a></li>
             </ul>
           </div>
         </div>
@@ -37,8 +51,10 @@ const Footer = () => {
           &copy; 2025 Literature Mill. All rights reserved.
         </div>
       </div>
+      <AuthModal isOpen={open} onClose={() => setOpen(false)} />
     </footer>
   );
 };
 
 export default Footer;
+
