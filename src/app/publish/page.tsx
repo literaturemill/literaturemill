@@ -31,21 +31,62 @@ export default function PublishPage() {
     <div className="max-w-xl mx-auto mt-10 p-4 bg-gray-800 text-white rounded-xl shadow-lg">
       <h1 className="text-2xl font-bold mb-4">Publish Your Story</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input name="title" placeholder="Title" value={form.title} onChange={handleChange} className="w-full p-2 rounded text-black" />
-        <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} className="w-full p-2 rounded text-black" />
-        <select name="category" value={form.category} onChange={handleChange} className="w-full p-2 rounded text-black">
-          <option value="">Select category</option>
-          <option>Fiction</option>
-          <option>Non-fiction</option>
-          <option>Poetry</option>
-          <option>Sci-Fi</option>
-          <option>Fantasy</option>
-          <option>Romance</option>
-        </select>
-        <input name="price" type="number" placeholder="Price" value={form.price} onChange={handleChange} className="w-full p-2 rounded text-black" />
-        <textarea name="content" placeholder="Preview or Content" value={form.content} onChange={handleChange} className="w-full p-2 rounded text-black" />
-        <button type="submit" className="bg-purple-600 px-4 py-2 rounded hover:bg-purple-700">Submit</button>
-      </form>
+    <input
+        name="title"
+        placeholder="Title"
+        value={form.title}
+        onChange={handleChange}
+        className="w-full p-3 rounded bg-gray-100 text-black placeholder-gray-500"
+    />
+
+    <textarea
+        name="description"
+        placeholder="Description"
+        value={form.description}
+        onChange={handleChange}
+        className="w-full p-3 rounded bg-gray-100 text-black placeholder-gray-500"
+    />
+
+    <select
+        name="category"
+        value={form.category}
+        onChange={handleChange}
+        className="w-full p-3 rounded bg-gray-100 text-black placeholder-gray-500"
+    >
+        <option value="">Select category</option>
+        <option>Fiction</option>
+        <option>Non-fiction</option>
+        <option>Poetry</option>
+        <option>Sci-Fi</option>
+        <option>Fantasy</option>
+        <option>Romance</option>
+        <option>Misc</option>
+     </select>
+
+    <input
+        name="price"
+        type="number"
+        placeholder="Price"
+        value={form.price}
+        onChange={handleChange}
+        className="w-full p-3 rounded bg-gray-100 text-black placeholder-gray-500"
+    />
+
+    <textarea
+        name="content"
+        placeholder="Preview or Content"
+        value={form.content}
+        onChange={handleChange}
+        className="w-full p-3 rounded bg-gray-100 text-black placeholder-gray-500"
+    />
+
+  <button
+    type="submit"
+    className="bg-purple-600 px-6 py-3 rounded hover:bg-purple-700 transition"
+  >
+    Submit
+  </button>
+</form>
     </div>
   );
 }

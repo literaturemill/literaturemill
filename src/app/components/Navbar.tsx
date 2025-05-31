@@ -1,8 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AuthModal from './AuthModal';
+import { supabase } from '../supabaseClient';
+import { User } from '@supabase/supabase-js';
+
 
 export default function Navbar() {
   const categories = ['Fiction', 'Non-fiction', 'Poetry', 'Sci-Fi', 'Fantasy', 'Romance'];
@@ -10,6 +13,19 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<'sign_in' | 'sign_up'>('sign_in');
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+
+useEffect(() => {
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    setUser(user);
+  };
+
+  getUser();
+}, []);
+
 
   return (
     <nav className="w-full bg-gray-900 shadow-md p-4 flex justify-between items-center">
@@ -32,8 +48,11 @@ export default function Navbar() {
         <Link href="/publish" className="hover:text-indigo-400 transition">
         Publish
         </Link>
-
-
+      {user && (
+      <Link href="/dashboard" className="hover:text-indigo-400 transition">
+        Dashboard
+      </Link>
+      )}
 
         <button className="hover:text-indigo-400 transition" onClick={() => {}}>
           Find a Story/Book
