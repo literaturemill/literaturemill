@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { supabase } from '../supabaseClient'; // Adjust path if needed
+import RichTextEditor from './RichTextEditor';
+import FileUpload from './FileUpload';
 
 export default function PublishPage() {
   const [form, setForm] = useState({
@@ -72,20 +74,20 @@ export default function PublishPage() {
         className="w-full p-3 rounded bg-gray-100 text-black placeholder-gray-500"
     />
 
-    <textarea
-        name="content"
-        placeholder="Preview or Content"
-        value={form.content}
-        onChange={handleChange}
-        className="w-full p-3 rounded bg-gray-100 text-black placeholder-gray-500"
+    <RichTextEditor
+    value={form.content}
+    onChange={(html: string) => setForm({ ...form, content: html })}
     />
 
+    <FileUpload />
+        
   <button
     type="submit"
     className="bg-purple-600 px-6 py-3 rounded hover:bg-purple-700 transition"
-  >
+   >
     Submit
-  </button>
+    </button>
+        
 </form>
     </div>
   );
