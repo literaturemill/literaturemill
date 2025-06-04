@@ -14,8 +14,8 @@ type Story = {
 };
 
 export default async function FindPage() {
-  const cookieStore = cookies(); // 👈 await it
-const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const cookieStore = await cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
   const {
     data: { user },
