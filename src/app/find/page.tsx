@@ -14,7 +14,8 @@ type Story = {
 };
 
 export default async function FindPage() {
-  const supabase = createServerComponentClient({ cookies });
+  const cookieStore = cookies(); // 👈 await it
+const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
   const {
     data: { user },
@@ -48,6 +49,24 @@ export default async function FindPage() {
         {user ? 'Recommended For You' : 'Popular Stories'}
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {stories.length === 0 ? (
+  <p className="text-gray-400">No stories available at the moment. Please check back later!</p>
+) : (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {stories.map((story) => (
+      <StoryCard
+        key={story.book_id}
+        title={story.title}
+        description={story.description}
+        price={story.price}
+        imageUrl={story.image_url}
+        rating={story.rating}
+        reviews={story.reviews}
+      />
+    ))}
+  </div>
+)}
+
         {stories.map((story: Story) => (
           <StoryCard
             key={story.book_id}

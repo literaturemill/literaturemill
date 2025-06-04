@@ -11,7 +11,8 @@ export default function PublishPage() {
     description: '',
     category: '',
     price: '',
-    content: ''
+    content: '',
+    upload_url: ''
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -25,7 +26,7 @@ export default function PublishPage() {
       alert('Error submitting: ' + error.message);
     } else {
       alert('Submitted successfully!');
-      setForm({ title: '', description: '', category: '', price: '', content: '' });
+      setForm({ title: '', description: '', category: '', price: '', content: '', upload_url: '' });
     }
   };
 
@@ -79,7 +80,14 @@ export default function PublishPage() {
     onChange={(html: string) => setForm({ ...form, content: html })}
     />
 
-    <FileUpload />
+    <FileUpload
+  onUpload={(url) =>
+    setForm((prev) => ({
+      ...prev,
+      upload_url: url,
+    }))
+  }
+/>
         
   <button
     type="submit"

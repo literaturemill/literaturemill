@@ -39,10 +39,36 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-2">Connect</h4>
             <ul className="space-y-1 text-sm">
-              <li><a href="https://x.com/LiteratureMill" className="hover:text-white" target="https://x.com/LiteratureMill">X</a></li>
-              <li><a href="https://www.tiktok.com/@literaturemill?_t=ZN-8wb08W7fdLy&_r=1" className="hover:text-white" target="https://www.tiktok.com/@literaturemill?_t=ZN-8wb08W7fdLy&_r=1">TikTok</a></li>
-              <li><a href="https://www.instagram.com/literaturemill1?igsh=cmFjMGgyOTJzdWd0&utm_source=qr" className="hover:text-white" target="https://www.instagram.com/literaturemill1?igsh=cmFjMGgyOTJzdWd0&utm_source=qr">Instagram</a></li>
-              <li><a href="mailto:literaturemill@gmail.com" className="hover:text-white">literaturemill@gmail.com</a></li>
+              <li>
+                <a
+                  href="https://x.com/LiteratureMill"
+                  className="hover:text-white"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  X
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.tiktok.com/@literaturemill?_t=ZN-8wb08W7fdLy&_r=1"
+                  className="hover:text-white"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  TikTok
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/literaturemill1?igsh=cmFjMGgyOTJzdWd0&utm_source=qr"
+                  className="hover:text-white"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Instagram
+                </a>
+              </li>
             </ul>
           </div>
         </div>

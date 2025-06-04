@@ -32,7 +32,7 @@ export default function StoryCard({
         className="w-full h-48 object-cover rounded"
       />
       <h2 className="text-xl font-semibold mt-2">{title}</h2>
-      <p className="text-white-600 text-sm mt-1">{description}</p>
+      <p className="text-gray-600 text-sm mt-1">{description}</p>
 
       <button
         onClick={() => setShowPreview(true)}
@@ -78,7 +78,7 @@ export default function StoryCard({
         <span className="ml-2 text-gray-200 text-sm">({reviews} reviews)</span>
       </div>
       <div className="flex justify-between items-center mt-4">
-        <span className="text-indigo-400 font-semibold">${price}</span>
+          <span className="text-indigo-400 font-semibold">{price}</span>
         <button className="text-sm px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">
           Buy Now
         </button>
