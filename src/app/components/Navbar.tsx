@@ -8,7 +8,7 @@ import type { User } from '@supabase/supabase-js';
 
 
 export default function Navbar() {
-  const categories = ['Fiction', 'Non-fiction', 'Poetry', 'Sci-Fi', 'Fantasy', 'Romance'];
+  const categories = ['Fiction', 'Non-fiction', 'Poetry', 'Sci-Fi', 'Fantasy', 'Romance', 'Misc'];
 
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<'sign_in' | 'sign_up'>('sign_in');
