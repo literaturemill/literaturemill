@@ -15,6 +15,7 @@ export default function Navbar() {
   const [openCategoryDropdown, setOpenCategoryDropdown] = useState(false);
   const [openProfileDropdown, setOpenProfileDropdown] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
 useEffect(() => {
   const getUser = async () => {
@@ -26,6 +27,18 @@ useEffect(() => {
 
   getUser();
 }, []);
+
+  useEffect(() => {
+  const stored = localStorage.getItem('theme');
+  const initial = stored === 'light' || stored === 'dark' ? stored : 'dark';
+  setTheme(initial as 'light' | 'dark');
+  document.documentElement.setAttribute('data-theme', initial);
+}, []);
+
+useEffect(() => {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+}, [theme]);
 
 
   return (
@@ -86,6 +99,41 @@ useEffect(() => {
           )}
         </div>
       </div>
+
+      <button
+        aria-label="Toggle Theme"
+        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        className="ml-4 p-2 rounded-full text-white hover:bg-gray-700 transition-colors duration-300"
+      >
+        {theme === 'dark' ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-5 h-5 transition-transform duration-500"
+          >
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-5 h-5 transition-transform duration-500"
+          >
+            <circle cx="12" cy="12" r="5" />
+            <path d="M12 1v2m0 18v2m11-11h-2M3 12H1m17.657-7.657l-1.414 1.414M6.757 17.657l-1.414 1.414M17.657 17.657l-1.414-1.414M6.757 6.757L5.343 5.343" />
+          </svg>
+        )}
+      </button>
 
       {user ? (
   <div className="relative">
