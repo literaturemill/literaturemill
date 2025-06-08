@@ -43,8 +43,7 @@ useEffect(() => {
 
   return (
     <nav
-      className="w-full shadow-md p-4 flex justify-between items-center"
-      style={{ background: 'var(--card-bg)' }}
+      className="w-full shadow-md p-4 flex justify-between items-center bg-card"
     >
       {/* Logo Section */}
       <div className="flex items-center space-x-2">
@@ -55,7 +54,7 @@ useEffect(() => {
               alt="Literature Mill logo"
               className="w-8 h-8 rounded-sm object-cover shadow-sm"
             />
-            <span className="text-2xl font-bold text-white">Literature Mill</span>
+            <span className="text-2xl font-bold text-foreground">Literature Mill</span>
           </div>
         </Link>
       </div>
@@ -68,7 +67,7 @@ useEffect(() => {
 
     
       {user && (
-  <Link href="/dashboard" className="ml-auto text-white hover:text-indigo-400 transition">
+  <Link href="/dashboard" className="ml-auto text-foreground hover:text-indigo-400 transition">
     Dashboard
   </Link>
 )}
@@ -106,8 +105,7 @@ useEffect(() => {
       <button
         aria-label="Toggle Theme"
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        className="ml-4 w-9 h-9 rounded-full border flex items-center justify-center transition-colors duration-300 hover:opacity-80"
-        style={{ background: 'var(--card-bg)', color: 'var(--foreground)' }}
+        className="ml-4 w-9 h-9 rounded-full border flex items-center justify-center transition-colors duration-300 hover:opacity-80 bg-card text-foreground"
       >
         <span className="relative w-5 h-5">
           <svg
@@ -135,7 +133,7 @@ useEffect(() => {
       {user ? (
   <div className="relative">
     <button
-      className="text-white hover:text-indigo-400 transition"
+      className="text-foreground hover:text-indigo-400 transition"
       onClick={() => setOpenProfileDropdown(!openProfileDropdown)}
     >
       {user?.email?.split('@')[0]} ⬇️

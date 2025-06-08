@@ -47,7 +47,7 @@ export default function StoryCard({
       </div>
 
       <div className="flex justify-between items-center mt-4">
-        <span className="text-white-600 font-bold">{price}</span>
+        <span className="text-foreground font-bold">{price}</span>
         <button
           onClick={() => router.push("/checkout")}
           className="text-sm px-3 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition">
@@ -59,7 +59,7 @@ export default function StoryCard({
 
     {showPreview && (
   <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300 flex items-center justify-center z-50">
-    <div className="card text-white p-6 rounded-xl shadow-2xl w-full max-w-md relative">
+    <div className="card text-foreground p-6 rounded-xl shadow-2xl w-full max-w-md relative">
       <button
         onClick={() => setShowPreview(false)}
         className="absolute top-2 right-2 opacity-70 hover:text-red-500 focus:outline-none focus:ring focus:ring-red-500 rounded-full text-xl"

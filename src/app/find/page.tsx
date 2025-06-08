@@ -45,7 +45,7 @@ export default async function FindPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6 text-white">
+      <h1 className="text-2xl font-bold mb-6 text-foreground">
         {user ? 'Recommended For You' : 'Popular Stories'}
       </h1>
       {stories.length === 0 ? (
