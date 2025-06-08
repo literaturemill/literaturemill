@@ -1,18 +1,20 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import AuthModal from './AuthModal';
 import { supabase } from '../supabaseClient';
 import type { User } from '@supabase/supabase-js';
+import categories from './categories';
 
 
 export default function Navbar() {
-  const categories = ['Fiction', 'Non-fiction', 'Poetry', 'Sci-Fi', 'Fantasy', 'Romance', 'Misc'];
+
 
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<'sign_in' | 'sign_up'>('sign_in');
   const [openCategoryDropdown, setOpenCategoryDropdown] = useState(false);
+  const categoryRef = useRef<HTMLDivElement>(null);
   const [openProfileDropdown, setOpenProfileDropdown] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -40,7 +42,18 @@ useEffect(() => {
   localStorage.setItem('theme', theme);
 }, [theme]);
 
+useEffect(() => {
+  if (!openCategoryDropdown) return;
+  const handleClick = (e: MouseEvent) => {
+    if (categoryRef.current && !categoryRef.current.contains(e.target as Node)) {
+      setOpenCategoryDropdown(false);
+    }
+  };
+  document.addEventListener('mousedown', handleClick);
+  return () => document.removeEventListener('mousedown', handleClick);
+}, [openCategoryDropdown]);
 
+  
   return (
     <nav
       className="w-full shadow-md p-4 flex justify-between items-center bg-card"
@@ -79,7 +92,7 @@ useEffect(() => {
           </button>
           </Link>
 
-        <div className="relative">
+        <div className="relative" ref={categoryRef}>
           <button
             onClick={() => setOpenCategoryDropdown(!openCategoryDropdown)}
             className="hover:text-indigo-400 transition"
@@ -88,13 +101,10 @@ useEffect(() => {
           </button>
 
           {openCategoryDropdown && (
-            <ul className="absolute top-full mt-2 bg-white border rounded p-2 z-50 text-black shadow-md w-48">
+            <ul className="absolute top-full mt-2 bg-card border rounded p-2 z-50 text-foreground shadow-md w-48">
               {categories.map((cat) => (
-                <li
-                  key={cat}
-                  className="p-2 hover:bg-indigo-100 cursor-pointer rounded"
-                >
-                  {cat}
+                <li key={cat} className="p-2 hover:bg-indigo-500/20 cursor-pointer rounded">
+                  <Link href={`/categories/${encodeURIComponent(cat)}`}>{cat}</Link>
                 </li>
               ))}
             </ul>

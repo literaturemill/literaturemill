@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { supabase } from '../supabaseClient'; // Adjust path if needed
+import categories from '../components/categories';
 import RichTextEditor from './RichTextEditor';
 import FileUpload from './FileUpload';
 import TitleEditor from './TitleEditor';
@@ -57,13 +58,9 @@ export default function PublishPage() {
         className="w-full p-3 rounded bg-gray-100 text-black placeholder-gray-500"
     >
         <option value="">Select category</option>
-        <option>Fiction</option>
-        <option>Non-fiction</option>
-        <option>Poetry</option>
-        <option>Sci-Fi</option>
-        <option>Fantasy</option>
-        <option>Romance</option>
-        <option>Misc</option>
+        {categories.map((cat) => (
+          <option key={cat}>{cat}</option>
+        ))}
      </select>
 
     <input
