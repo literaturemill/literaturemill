@@ -60,7 +60,7 @@ useEffect(() => {
       </div>
 
       {/* Center Actions */}
-      <div className="flex gap-4 text-gray-300 relative">
+      <div className="flex gap-4 text-foreground relative">
         <Link href="/publish" className="hover:text-indigo-400 transition">
         Publish
         </Link>
