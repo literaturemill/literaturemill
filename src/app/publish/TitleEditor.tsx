@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -11,16 +11,21 @@ type TitleEditorProps = {
 };
 
 export default function TitleEditor({ value, onChange }: TitleEditorProps) {
+  const [isEmpty, setIsEmpty] = useState(true);
   const editor = useEditor({
     extensions: [StarterKit, Underline],
-    content: value || '<p>Title</p>',
+    content: value,
     editorProps: {
       attributes: {
         class: 'focus:outline-none',
       },
     },
+    onCreate: ({ editor }) => {
+      setIsEmpty(editor.isEmpty);
+    },
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
+      setIsEmpty(editor.isEmpty);
     },
   });
 
@@ -63,7 +68,14 @@ export default function TitleEditor({ value, onChange }: TitleEditorProps) {
           Underline
         </button>
       </div>
-      <EditorContent editor={editor} />
+      <div className="relative">
+        {isEmpty && (
+          <p className="absolute left-2 top-2 text-gray-400 pointer-events-none">
+            Title
+          </p>
+        )}
+        <EditorContent editor={editor} className="min-h-[40px]" />
+      </div>
     </div>
   );
 }

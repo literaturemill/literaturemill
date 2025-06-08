@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -11,11 +11,16 @@ type RichTextEditorProps = {
 };
 
 export default function RichTextEditor({ value, onChange }: RichTextEditorProps) {
+  const [isEmpty, setIsEmpty] = useState(true);
   const editor = useEditor({
     extensions: [StarterKit, Underline],
-    content: value || '<p>Start writing your masterpiece...</p>',
+    content: value,
+    onCreate: ({ editor }) => {
+      setIsEmpty(editor.isEmpty);
+    },
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
+      setIsEmpty(editor.isEmpty);
     },
   });
 
@@ -60,7 +65,14 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
 
       </div>
 
-      <EditorContent editor={editor} />
+      <div className="relative">
+        {isEmpty && (
+          <p className="absolute left-2 top-2 text-gray-400 pointer-events-none">
+            Type your story here or upload it using the upload button
+          </p>
+        )}
+        <EditorContent editor={editor} className="min-h-[120px]" />
+      </div>
     </div>
   );
 }

@@ -44,7 +44,7 @@ export default function FileUpload({
         type="file"
         accept=".pdf,.doc,.docx"
         onChange={handleFileChange}
-        className="block w-full text-white"
+        className="block w-full text-white file:bg-blue-600 file:text-white file:px-4 file:py-2 file:rounded file:border-0 hover:file:bg-blue-700"
       />
       {uploading && <p className="text-sm text-gray-400 mt-2">Uploading...</p>}
       {fileName && <p className="text-sm text-green-400 mt-2">Uploaded: {fileName}</p>}
