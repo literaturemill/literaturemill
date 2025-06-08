@@ -27,6 +27,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              const t = localStorage.getItem('theme');
+              if (t === 'light' || t === 'dark') {
+                document.documentElement.setAttribute('data-theme', t);
+              }
+            `,
+          }}
+        />
         <Navbar />
         <main>{children}</main>
         <Footer />

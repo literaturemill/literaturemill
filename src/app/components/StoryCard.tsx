@@ -25,14 +25,14 @@ export default function StoryCard({
 
   return (
     <>
-    <div className="bg-black rounded-lg shadow-md p-4 flex flex-col">
+    <div className="card rounded-lg shadow-md p-4 flex flex-col">
       <img
         src={imageUrl}
         alt={title}
         className="w-full h-48 object-cover rounded"
       />
       <h2 className="text-xl font-semibold mt-2">{title}</h2>
-      <p className="text-gray-600 text-sm mt-1">{description}</p>
+      <p className="text-sm mt-1 opacity-80">{description}</p>
 
       <button
         onClick={() => setShowPreview(true)}
@@ -43,7 +43,7 @@ export default function StoryCard({
       {/* Rating + Reviews */}
       <div className="flex items-center mt-2 text-sm text-yellow-500">
         {"★".repeat(Math.round(rating))}
-        <span className="ml-2 text-gray-200 text-sm">({reviews} reviews)</span>
+        <span className="ml-2 text-sm opacity-80">({reviews} reviews)</span>
       </div>
 
       <div className="flex justify-between items-center mt-4">
@@ -59,10 +59,10 @@ export default function StoryCard({
 
     {showPreview && (
   <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300 flex items-center justify-center z-50">
-    <div className="bg-zinc-900 text-white p-6 rounded-xl shadow-2xl w-full max-w-md relative">
+    <div className="card text-white p-6 rounded-xl shadow-2xl w-full max-w-md relative">
       <button
         onClick={() => setShowPreview(false)}
-        className="absolute top-2 right-2 text-gray-400 hover:text-red-500 focus:outline-none focus:ring focus:ring-red-500 rounded-full text-xl"
+        className="absolute top-2 right-2 opacity-70 hover:text-red-500 focus:outline-none focus:ring focus:ring-red-500 rounded-full text-xl"
       >
         &times;
       </button>
@@ -72,10 +72,10 @@ export default function StoryCard({
         alt={title}
         className="w-full h-56 object-cover rounded-md mb-4"
       />
-      <p className="text-gray-300 text-sm mb-2">{description}</p>
+      <p className="text-sm mb-2 opacity-80">{description}</p>
       <div className="flex items-center text-yellow-400 mb-2">
         {'★'.repeat(Math.round(rating))}
-        <span className="ml-2 text-gray-200 text-sm">({reviews} reviews)</span>
+        <span className="ml-2 text-sm opacity-80">({reviews} reviews)</span>
       </div>
       <div className="flex justify-between items-center mt-4">
           <span className="text-indigo-400 font-semibold">{price}</span>

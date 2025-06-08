@@ -42,7 +42,10 @@ useEffect(() => {
 
 
   return (
-    <nav className="w-full bg-gray-900 shadow-md p-4 flex justify-between items-center">
+    <nav
+      className="w-full shadow-md p-4 flex justify-between items-center"
+      style={{ background: 'var(--card-bg)' }}
+    >
       {/* Logo Section */}
       <div className="flex items-center space-x-2">
         <Link href="/">
@@ -103,36 +106,30 @@ useEffect(() => {
       <button
         aria-label="Toggle Theme"
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        className="ml-4 p-2 rounded-full text-white hover:bg-gray-700 transition-colors duration-300"
+        className="ml-4 w-9 h-9 rounded-full border flex items-center justify-center transition-colors duration-300 hover:opacity-80"
+        style={{ background: 'var(--card-bg)', color: 'var(--foreground)' }}
       >
-        {theme === 'dark' ? (
+        <span className="relative w-5 h-5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-5 h-5 transition-transform duration-500"
-          >
-            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
-          </svg>
-        ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-5 h-5 transition-transform duration-500"
+            className={`absolute inset-0 w-full h-full text-yellow-400 transition-opacity duration-300 ${theme === 'light' ? 'opacity-100' : 'opacity-0'}`}
           >
             <circle cx="12" cy="12" r="5" />
-            <path d="M12 1v2m0 18v2m11-11h-2M3 12H1m17.657-7.657l-1.414 1.414M6.757 17.657l-1.414 1.414M17.657 17.657l-1.414-1.414M6.757 6.757L5.343 5.343" />
+            <path d="M12 1v2m0 18v2m11-11h-2M3 12H1m17.657-7.657l-1.414 1.414M6.757 17.657l-1.414 1.414M17.657 17.657l-1.414-1.414M6.757 6.757L5.343 5.343" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-        )}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            className={`absolute inset-0 w-full h-full text-indigo-300 transition-opacity duration-300 ${theme === 'dark' ? 'opacity-100' : 'opacity-0'}`}
+          >
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
       </button>
 
       {user ? (
