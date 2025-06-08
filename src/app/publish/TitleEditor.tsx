@@ -5,15 +5,20 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 
-type RichTextEditorProps = {
+type TitleEditorProps = {
   value: string;
   onChange: (html: string) => void;
 };
 
-export default function RichTextEditor({ value, onChange }: RichTextEditorProps) {
+export default function TitleEditor({ value, onChange }: TitleEditorProps) {
   const editor = useEditor({
     extensions: [StarterKit, Underline],
-    content: value || '<p>Start writing your masterpiece...</p>',
+    content: value || '<p>Title</p>',
+    editorProps: {
+      attributes: {
+        class: 'focus:outline-none',
+      },
+    },
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },
@@ -28,7 +33,7 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
   if (!editor) return null;
 
   return (
-    <div className="space-y-2 border p-4 rounded-md bg-white text-black">
+    <div className="space-y-2 border p-2 rounded-md bg-white text-black">
       <div className="flex gap-2 mb-2">
         <button
           type="button"
@@ -57,11 +62,8 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
         >
           Underline
         </button>
-
       </div>
-
       <EditorContent editor={editor} />
     </div>
   );
 }
-

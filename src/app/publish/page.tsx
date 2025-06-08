@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { supabase } from '../supabaseClient'; // Adjust path if needed
 import RichTextEditor from './RichTextEditor';
 import FileUpload from './FileUpload';
+import TitleEditor from './TitleEditor';
+import CoverImageUpload from './CoverImageUpload';
 
 export default function PublishPage() {
   const [form, setForm] = useState({
@@ -12,7 +14,8 @@ export default function PublishPage() {
     category: '',
     price: '',
     content: '',
-    upload_url: ''
+    upload_url: '',
+    image_url: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -26,7 +29,7 @@ export default function PublishPage() {
       alert('Error submitting: ' + error.message);
     } else {
       alert('Submitted successfully!');
-      setForm({ title: '', description: '', category: '', price: '', content: '', upload_url: '' });
+      setForm({ title: '', description: '', category: '', price: '', content: '', upload_url: '', image_url: '' });
     }
   };
 
@@ -34,12 +37,9 @@ export default function PublishPage() {
     <div className="max-w-xl mx-auto mt-10 p-4 bg-gray-800 text-white rounded-xl shadow-lg">
       <h1 className="text-2xl font-bold mb-4">Publish Your Story</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-    <input
-        name="title"
-        placeholder="Title"
+    <TitleEditor
         value={form.title}
-        onChange={handleChange}
-        className="w-full p-3 rounded bg-gray-100 text-black placeholder-gray-500"
+        onChange={(html: string) => setForm({ ...form, title: html })}
     />
 
     <textarea
@@ -73,6 +73,15 @@ export default function PublishPage() {
         value={form.price}
         onChange={handleChange}
         className="w-full p-3 rounded bg-gray-100 text-black placeholder-gray-500"
+        />
+        
+        <CoverImageUpload
+      onUpload={(url) =>
+        setForm((prev) => ({
+          ...prev,
+          image_url: url,
+        }))
+      }
     />
 
     <RichTextEditor
