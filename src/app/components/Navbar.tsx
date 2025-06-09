@@ -90,7 +90,7 @@ useEffect(() => {
         <button className="hover:text-indigo-400 transition" onClick={() => {}}>
           Find a Story/Book
           </button>
-          </Link>
+        </Link>
 
         <div className="relative" ref={categoryRef}>
           <button

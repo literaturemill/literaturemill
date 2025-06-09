@@ -1,38 +1,34 @@
 "use client";
 
 import StoryCard from "./components/StoryCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "./supabaseClient";
 
-const stories = [
-  {
-    title: "Moonlight Memories",
-    description: "A poetic journey through dreams and time.",
-    price: "$4.99",
-    imageUrl: "https://placekitten.com/400/250",
-    rating: 5,
-    reviews: 23,
-  },
-  {
-    title: "Lost in Lavender",
-    description: "An artist's tale set in a fantasy realm.",
-    price: "$7.99",
-    imageUrl: "https://placekitten.com/401/250",
-    rating: 4,
-    reviews: 16,
-  },
-  {
-    title: "The Last Sketch",
-    description: "Mystery unfolds through every pencil stroke.",
-    price: "$5.99",
-    imageUrl: "https://placekitten.com/402/250",
-    rating: 4,
-    reviews: 9,
-  },
-];
-
+type Story = {
+  book_id: string;
+  title: string;
+  description: string;
+  price: string;
+  image_url: string;
+  rating: number;
+  reviews: number;
+};
 export default function Home() {
   const [query, setQuery] = useState("");
+  const [stories, setStories] = useState<Story[]>([]);
 
+  useEffect(() => {
+    const fetchTrending = async () => {
+      const { data } = await supabase
+        .from("trending_books")
+        .select("*")
+        .limit(12);
+      setStories((data as Story[]) || []);
+    };
+
+    fetchTrending();
+  }, []);
+  
   const filteredStories = stories.filter((story) =>
     story.title.toLowerCase().includes(query.toLowerCase())
   );

@@ -18,8 +18,8 @@ type Book = {
 
 export default async function CategoryPage({ params }: { params: Params }) {
   const categoryParam = decodeURIComponent(params.category);
-  const cookieStore = await cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore, });
 
   const { data } = await supabase
     .from('books')

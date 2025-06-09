@@ -7,7 +7,7 @@ type StoryCardProps = {
   title: string;
   description: string;
   price: string;
-  imageUrl: string;
+  image_url: string;
   rating: number;         // new
   reviews: number;        // new
 };
@@ -16,7 +16,7 @@ export default function StoryCard({
   title,
   description,
   price,
-  imageUrl,
+  image_url,
   rating,
   reviews,
 }: StoryCardProps) {
@@ -27,7 +27,7 @@ export default function StoryCard({
     <>
     <div className="card rounded-lg shadow-md p-4 flex flex-col">
       <img
-        src={imageUrl}
+        src={image_url}
         alt={title}
         className="w-full h-48 object-cover rounded"
       />
@@ -68,7 +68,7 @@ export default function StoryCard({
       </button>
       <h2 className="text-2xl font-bold mb-4">{title}</h2>
       <img
-        src={imageUrl}
+        src={image_url}
         alt={title}
         className="w-full h-56 object-cover rounded-md mb-4"
       />
