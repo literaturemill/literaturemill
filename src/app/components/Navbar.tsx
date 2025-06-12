@@ -17,6 +17,7 @@ export default function Navbar() {
   const categoryRef = useRef<HTMLDivElement>(null);
   const [openProfileDropdown, setOpenProfileDropdown] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [profileUrl, setProfileUrl] = useState<string | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
 useEffect(() => {
@@ -25,6 +26,14 @@ useEffect(() => {
       data: { user },
     } = await supabase.auth.getUser();
     setUser(user);
+    if (user) {
+      const { data } = await supabase
+        .from('profiles')
+        .select('avatar_url')
+        .eq('id', user.id)
+        .single();
+      setProfileUrl(data?.avatar_url || null);
+    }
   };
 
   getUser();
@@ -143,10 +152,15 @@ useEffect(() => {
       {user ? (
   <div className="relative">
     <button
-      className="text-foreground hover:text-indigo-400 transition"
+      className="w-8 h-8 rounded-full overflow-hidden border border-indigo-400"
       onClick={() => setOpenProfileDropdown(!openProfileDropdown)}
     >
-      {user?.email?.split('@')[0]} ⬇️
+            {user?.email?.split('@')[0]} ⬇️
+            <img
+        src={profileUrl || '/default-avatar.png'}
+        alt="profile"
+        className="w-full h-full object-cover"
+      />
     </button>
     {openProfileDropdown && (
       <div className="absolute right-0 mt-2 bg-white text-black rounded shadow-md w-40 p-2 z-50">
@@ -154,12 +168,19 @@ useEffect(() => {
           <span className="block w-full text-left hover:bg-indigo-100 p-2 rounded cursor-pointer">
             Dashboard
           </span>
+              </Link>
+              <Link href="/profile">
+          <span className="block w-full text-left hover:bg-indigo-100 p-2 rounded cursor-pointer">
+            Profile
+          </span>
         </Link>
         <button
           className="block w-full text-left hover:bg-indigo-100 p-2 rounded"
           onClick={async () => {
             await supabase.auth.signOut();
-            window.location.href = '/'; // redirect to home
+            setUser(null);
+            setProfileUrl(null);
+            window.location.href = '/';
           }}
         >
           Sign Out

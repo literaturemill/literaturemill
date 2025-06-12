@@ -24,7 +24,7 @@ export default function CoverImageUpload({
 
     if (error) {
       console.error('Upload error:', error.message);
-      alert('Cover upload failed!');
+      alert('Cover upload failed! User needs to be signed in to upload, for other issues please contact Support');
     } else {
       const publicURL = supabase.storage
         .from('uploads')

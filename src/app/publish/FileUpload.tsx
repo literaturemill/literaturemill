@@ -24,7 +24,7 @@ export default function FileUpload({
 
     if (error) {
       console.error('Upload error:', error.message);
-      alert('File upload failed!');
+      alert('File upload failed! User needs to be signed in');
     } else {
       const publicURL = supabase.storage
         .from('uploads')
