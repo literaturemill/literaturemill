@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { supabase } from "../supabaseClient";
+import Image from "next/image";
 
 interface Props {
   userId: string;
@@ -36,9 +37,12 @@ export default function ProfilePictureUpload({ userId, avatarUrl, onUpload }: Pr
 
   return (
     <div className="flex items-center gap-4">
-      <img
+      <Image
         src={avatarUrl || "/default-avatar.png"}
         alt="avatar"
+        width={64}
+        height={64}
+        unoptimized
         className="w-16 h-16 rounded-full object-cover"
       />
       <input

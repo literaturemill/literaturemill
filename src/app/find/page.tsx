@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import StoryCard from '../components/StoryCard';
 import { supabase } from '../supabaseClient';
 import Link from 'next/link';
+import Image from 'next/image';
 
 
 type Story = {
@@ -80,7 +81,14 @@ export default function FindPage() {
         <ul className="mb-4 space-y-2 max-w-md">
           {users.map((u) => (
             <li key={u.id} className="flex items-center gap-2">
-              <img src={u.avatar_url || '/default-avatar.png'} className="w-6 h-6 rounded-full object-cover" />
+              <Image
+                src={u.avatar_url || '/default-avatar.png'}
+                alt="avatar"
+                width={24}
+                height={24}
+                unoptimized
+                className="w-6 h-6 rounded-full object-cover"
+              />
               <Link href={`/profile/${u.id}`} className="text-indigo-400 hover:underline">
                 {u.username}
               </Link>

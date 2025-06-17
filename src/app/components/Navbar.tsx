@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import AuthModal from './AuthModal';
 import { supabase } from '../supabaseClient';
@@ -71,9 +72,11 @@ useEffect(() => {
       <div className="flex items-center space-x-2">
         <Link href="/">
           <div className="flex items-center space-x-2 hover:opacity-80 transition duration-300">
-            <img
+            <Image
               src="/windmill.jpg"
               alt="Literature Mill logo"
+              width={32}
+              height={32}
               className="w-8 h-8 rounded-sm object-cover shadow-sm"
             />
             <span className="text-2xl font-bold text-foreground">Literature Mill</span>
@@ -156,9 +159,12 @@ useEffect(() => {
       onClick={() => setOpenProfileDropdown(!openProfileDropdown)}
     >
             {user?.email?.split('@')[0]} ⬇️
-            <img
+            <Image
         src={profileUrl || '/default-avatar.png'}
         alt="profile"
+        width={32}
+        height={32}
+        unoptimized
         className="w-full h-full object-cover"
       />
     </button>

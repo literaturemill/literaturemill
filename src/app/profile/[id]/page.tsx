@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import FollowButton from '../../components/FollowButton';
+import Image from 'next/image';
 
 interface Params { id: string }
 
@@ -22,9 +23,12 @@ export default async function UserProfile({ params }: { params: Params }) {
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-4 text-foreground">
-      <img
+      <Image
         src={target.avatar_url || '/default-avatar.png'}
         alt="avatar"
+        width={96}
+        height={96}
+        unoptimized
         className="w-24 h-24 rounded-full object-cover"/>
       <h1 className="text-2xl font-bold mt-4">{target.username}</h1>
       <div className="flex gap-4 mt-2">

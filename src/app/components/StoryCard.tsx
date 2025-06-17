@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 type StoryCardProps = {
   title: string;
@@ -26,9 +27,12 @@ export default function StoryCard({
   return (
     <>
     <div className="card rounded-lg shadow-md p-4 flex flex-col">
-      <img
+      <Image
         src={image_url}
         alt={title}
+        width={600}
+        height={192}
+        unoptimized
         className="w-full h-48 object-cover rounded"
       />
       <h2 className="text-xl font-semibold mt-2">{title}</h2>
@@ -67,9 +71,12 @@ export default function StoryCard({
         &times;
       </button>
       <h2 className="text-2xl font-bold mb-4">{title}</h2>
-      <img
+      <Image
         src={image_url}
         alt={title}
+        width={600}
+        height={224}
+        unoptimized
         className="w-full h-56 object-cover rounded-md mb-4"
       />
       <p className="text-sm mb-2 opacity-80">{description}</p>

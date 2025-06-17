@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import AuthModal from "./AuthModal";
+import Link from 'next/link';
 
 const Footer = () => {
   const [open, setOpen] = useState(false);
@@ -22,9 +23,9 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-2">Quick Links</h4>
             <ul className="space-y-1 text-sm">
-              <li><a href="/" className="hover:text-white">Home</a></li>
-              <li><a href="/publish" className="hover:text-white">Publish</a></li>
-              <li><a href="/categories" className="hover:text-white">Categories</a></li>
+              <li><Link href="/" className="hover:text-white">Home</Link></li>
+              <li><Link href="/publish" className="hover:text-white">Publish</Link></li>
+              <li><Link href="/categories" className="hover:text-white">Categories</Link></li>
               <li>
               <button
                 onClick={() => setOpen(true)}
