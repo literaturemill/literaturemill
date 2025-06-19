@@ -78,7 +78,7 @@ useEffect(() => {
 
   return (
     <nav
-      className="w-full shadow-md p-4 flex justify-between items-center bg-card"
+      className="w-full shadow-md p-4 flex flex-wrap items-center justify-between bg-card gap-4"
     >
       {/* Logo Section */}
       <div className="flex items-center space-x-2">
@@ -97,14 +97,14 @@ useEffect(() => {
       </div>
 
       {/* Center Actions */}
-      <div className="flex flex-wrap items-center gap-4 text-foreground relative">
+      <div className="flex flex-wrap justify-center items-center gap-3 text-foreground relative w-full md:w-auto order-last md:order-none">
         <Link href="/publish" className="hover:text-indigo-400 transition">
         Publish
         </Link>
 
     
       {user && (
-  <Link href="/dashboard" className="ml-auto text-foreground hover:text-indigo-400 transition">
+  <Link href="/dashboard" className="text-foreground hover:text-indigo-400 transition">
     Dashboard
   </Link>
 )}
@@ -142,7 +142,7 @@ useEffect(() => {
       <button
         aria-label="Toggle Theme"
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        className="ml-4 w-9 h-9 rounded-full border flex items-center justify-center transition-colors duration-300 hover:opacity-80 bg-card text-foreground"
+        className="w-9 h-9 rounded-full border flex items-center justify-center transition-colors duration-300 hover:opacity-80 bg-card text-foreground"
       >
         <span className="relative w-5 h-5">
           <svg

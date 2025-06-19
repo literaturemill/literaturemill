@@ -70,6 +70,16 @@ const Footer = () => {
                   Instagram
                 </a>
               </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/literaturemill1?igsh=cmFjMGgyOTJzdWd0&utm_source=qr"
+                  className="hover:text-white"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Patreon 🧡
+                </a>
+              </li>
             </ul>
           </div>
         </div>
