@@ -104,7 +104,7 @@ export default function Home() {
             <Link href="/about" className="inline-block bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded transition">Learn More</Link>
           </div>
           <div className="md:w-1/2 flex justify-center">
-            <img src="" alt="Revenue sharing" className="max-w-full" />
+            <img src="/revenue_pie.png" alt="Revenue sharing" className="max-w-full" />
           </div>
         </section>
       </main>
