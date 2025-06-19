@@ -86,9 +86,27 @@ export default function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filteredStories.map((story, index) => (
-          <StoryCard key={index} {...story} />
+           <StoryCard key={index} {...story} />
           ))}
         </div>
+
+        <section className="mt-12 flex flex-col md:flex-row items-center gap-6">
+          <div className="md:w-1/2">
+            <h2 className="text-2xl font-bold mb-4">How Revenue Sharing Works</h2>
+            <p className="mb-2">Literature Mill is built with a writer-first mindset. Our goal is to give creators maximum ownership of their work and the earnings that follow.</p>
+            <p className="mb-2">Here’s how each purchase is distributed:</p>
+            <ul className="list-disc pl-5 space-y-1 mb-2">
+              <li>85% of the sale goes directly to the writer, ensuring you're rewarded fairly for your creativity and effort.</li>
+              <li>5–10% is allocated to server and transaction costs, including hosting, file storage, and payment processing.</li>
+              <li>The remaining 5% supports the ongoing development and maintenance of the platform, helping us build new features and improve user experience.</li>
+            </ul>
+            <p className="mb-4">This model is simple, sustainable, and focused on putting control in the hands of creators.</p>
+            <Link href="/about" className="inline-block bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded transition">Learn More</Link>
+          </div>
+          <div className="md:w-1/2 flex justify-center">
+            <img src="" alt="Revenue sharing" className="max-w-full" />
+          </div>
+        </section>
       </main>
     </>
   );

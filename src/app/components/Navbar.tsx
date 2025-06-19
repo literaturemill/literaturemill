@@ -17,6 +17,7 @@ export default function Navbar() {
   const [openCategoryDropdown, setOpenCategoryDropdown] = useState(false);
   const categoryRef = useRef<HTMLDivElement>(null);
   const [openProfileDropdown, setOpenProfileDropdown] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
   const [user, setUser] = useState<User | null>(null);
   const [profileUrl, setProfileUrl] = useState<string | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -63,7 +64,18 @@ useEffect(() => {
   return () => document.removeEventListener('mousedown', handleClick);
 }, [openCategoryDropdown]);
 
+  useEffect(() => {
+  if (!openProfileDropdown) return;
+  const handleClick = (e: MouseEvent) => {
+    if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+      setOpenProfileDropdown(false);
+    }
+  };
+  document.addEventListener('mousedown', handleClick);
+  return () => document.removeEventListener('mousedown', handleClick);
+  }, [openProfileDropdown]);
   
+
   return (
     <nav
       className="w-full shadow-md p-4 flex justify-between items-center bg-card"
@@ -85,7 +97,7 @@ useEffect(() => {
       </div>
 
       {/* Center Actions */}
-      <div className="flex gap-4 text-foreground relative">
+      <div className="flex flex-wrap items-center gap-4 text-foreground relative">
         <Link href="/publish" className="hover:text-indigo-400 transition">
         Publish
         </Link>
@@ -99,9 +111,12 @@ useEffect(() => {
 
   
         <Link href="/find">
-        <button className="hover:text-indigo-400 transition" onClick={() => {}}>
-          Find a Story/Book
+         <button className="hover:text-indigo-400 transition" onClick={() => {}}>
+           Find a Story/Book
           </button>
+        </Link>
+        <Link href="/about" className="hover:text-indigo-400 transition">
+          About Us
         </Link>
 
         <div className="relative" ref={categoryRef}>
@@ -153,7 +168,7 @@ useEffect(() => {
       </button>
 
       {user ? (
-  <div className="relative">
+  <div className="relative" ref={profileRef}>
     <button
       className="w-8 h-8 rounded-full overflow-hidden border border-indigo-400"
       onClick={() => setOpenProfileDropdown(!openProfileDropdown)}
@@ -169,19 +184,19 @@ useEffect(() => {
       />
     </button>
     {openProfileDropdown && (
-      <div className="absolute right-0 mt-2 bg-white text-black rounded shadow-md w-40 p-2 z-50">
+      <div className="absolute right-0 mt-2 bg-card text-foreground border rounded shadow-md w-40 p-2 z-50">
         <Link href="/dashboard">
-          <span className="block w-full text-left hover:bg-indigo-100 p-2 rounded cursor-pointer">
+          <span className="block w-full text-left hover:bg-indigo-500/20 p-2 rounded cursor-pointer">
             Dashboard
           </span>
               </Link>
               <Link href="/profile">
-          <span className="block w-full text-left hover:bg-indigo-100 p-2 rounded cursor-pointer">
+          <span className="block w-full text-left hover:bg-indigo-500/20 p-2 rounded cursor-pointer">
             Profile
           </span>
         </Link>
         <button
-          className="block w-full text-left hover:bg-indigo-100 p-2 rounded"
+          className="block w-full text-left hover:bg-indigo-500/20 p-2 rounded"
           onClick={async () => {
             await supabase.auth.signOut();
             setUser(null);

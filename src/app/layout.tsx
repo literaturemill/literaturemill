@@ -38,6 +38,7 @@ export default function RootLayout({
         </Script>
         <Navbar />
         <main>{children}</main>
+        <hr className="border-t border-gray-700 mt-12" />
         <Footer />
       </body>
     </html>

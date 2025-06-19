@@ -22,6 +22,14 @@ export default function StoryCard({
   reviews,
 }: StoryCardProps) {
   const [showPreview, setShowPreview] = useState(false);
+
+  const handleAddToCart = () => {
+    const raw = localStorage.getItem('cart');
+    const cart = raw ? JSON.parse(raw) : [];
+    cart.push({ title, price, image_url });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('Added to cart');
+  };
   const router = useRouter();
 
   return (
@@ -52,15 +60,25 @@ export default function StoryCard({
 
       <div className="flex justify-between items-center mt-4">
         <span className="text-foreground font-bold">{price}</span>
-        <button
-          onClick={() =>
-            router.push(
-              `/checkout?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}`
-            )
-          }
-          className="text-sm px-3 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition">
-          Buy Now
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={handleAddToCart}
+            className="text-sm px-3 py-1 border border-indigo-500 text-indigo-500 rounded hover:bg-indigo-600 hover:text-white transition"
+          >
+            Add to Cart
+          </button>
+          <button
+            onClick={() => {
+              localStorage.setItem('checkoutItem', JSON.stringify({ title, price, image_url }));
+              router.push(
+                `/checkout?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}`
+              );
+            }}
+            className="text-sm px-3 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition"
+          >
+            Buy Now
+          </button>
+        </div>
 
       </div>
     </div>
@@ -90,16 +108,25 @@ export default function StoryCard({
       </div>
       <div className="flex justify-between items-center mt-4">
           <span className="text-indigo-400 font-semibold">{price}</span>
-        <button
-          className="text-sm px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
-          onClick={() =>
-            router.push(
-              `/checkout?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}`
-            )
-          }
-        >
-          Buy Now
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={handleAddToCart}
+            className="text-sm px-3 py-1 border border-indigo-500 text-indigo-500 rounded hover:bg-indigo-600 hover:text-white transition"
+          >
+            Add to Cart
+          </button>
+          <button
+            className="text-sm px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+            onClick={() => {
+              localStorage.setItem('checkoutItem', JSON.stringify({ title, price, image_url }));
+              router.push(
+                `/checkout?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}`
+              );
+            }}
+          >
+            Buy Now
+          </button>
+        </div>
       </div>
     </div>
   </div>
