@@ -53,7 +53,11 @@ export default function StoryCard({
       <div className="flex justify-between items-center mt-4">
         <span className="text-foreground font-bold">{price}</span>
         <button
-          onClick={() => router.push("/checkout")}
+          onClick={() =>
+            router.push(
+              `/checkout?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}`
+            )
+          }
           className="text-sm px-3 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition">
           Buy Now
         </button>
@@ -86,7 +90,14 @@ export default function StoryCard({
       </div>
       <div className="flex justify-between items-center mt-4">
           <span className="text-indigo-400 font-semibold">{price}</span>
-        <button className="text-sm px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition">
+        <button
+          className="text-sm px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+          onClick={() =>
+            router.push(
+              `/checkout?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}`
+            )
+          }
+        >
           Buy Now
         </button>
       </div>
