@@ -25,13 +25,34 @@ export default function PublishPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.from('books').insert([form]);
+    
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      alert('You must be signed in to publish.');
+      return;
+    }
+
+    const { error } = await supabase
+      .from('books')
+      .insert([{ ...form, author_id: user.id }]);
     if (error) {
       alert('Error submitting: ' + error.message);
-    } else {
-      alert('Submitted successfully!');
-      setForm({ title: '', description: '', category: '', price: '', content: '', upload_url: '', image_url: '' });
+      return;
     }
+
+    alert('Submitted successfully!');
+    setForm({
+      title: '',
+      description: '',
+      category: '',
+      price: '',
+      content: '',
+      upload_url: '',
+      image_url: '',
+    });
   };
 
   return (

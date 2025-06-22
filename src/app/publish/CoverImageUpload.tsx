@@ -18,9 +18,22 @@ export default function CoverImageUpload({
     setUploading(true);
     setFileName(file.name);
 
+    // Retrieve the currently logged in user
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      alert('Cover upload failed! User needs to be signed in to upload');
+      setUploading(false);
+      return;
+    }
+
+    const uploadPath = `covers/${user.id}/${Date.now()}-${file.name}`;
+
     const { data, error } = await supabase.storage
       .from('uploads')
-      .upload(`covers/${Date.now()}-${file.name}`, file);
+      .upload(uploadPath, file);
 
     if (error) {
       console.error('Upload error:', error.message);
