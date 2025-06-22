@@ -23,22 +23,46 @@ export default function Navbar() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
 useEffect(() => {
-  const getUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    setUser(user);
-    if (user) {
+  const handleUser = async (currentUser: User | null) => {
+    setUser(currentUser);
+
+    if (currentUser) {
+      const { error } = await supabase.from('profiles').upsert({
+        id: currentUser.id,
+        email: currentUser.email,
+      });
+
+      if (error) console.error('Profile insert error:', error);
+
       const { data } = await supabase
         .from('profiles')
         .select('avatar_url')
-        .eq('id', user.id)
+        .eq('id', currentUser.id)
         .single();
       setProfileUrl(data?.avatar_url || null);
+      } else {
+      setProfileUrl(null);
     }
   };
 
-  getUser();
+  const getInitialUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    handleUser(user);
+  };
+
+  getInitialUser();
+
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange((_event, session) => {
+    handleUser(session?.user ?? null);
+  });
+
+  return () => {
+    subscription.unsubscribe();
+  };
 }, []);
 
   useEffect(() => {
