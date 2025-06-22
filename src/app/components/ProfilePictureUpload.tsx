@@ -24,12 +24,15 @@ export default function ProfilePictureUpload({ userId, avatarUrl, onUpload }: Pr
       .upload(filePath, file, { upsert: true });
 
     if (!error) {
-      const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
+      const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
       await supabase
-        .from("profiles")
+        .from('profiles')
         .update({ avatar_url: data.publicUrl })
-        .eq("id", userId);
+        .eq('id', userId);
       onUpload?.(data.publicUrl);
+      document.dispatchEvent(
+        new CustomEvent('avatar-updated', { detail: data.publicUrl })
+      );
     }
 
     setUploading(false);

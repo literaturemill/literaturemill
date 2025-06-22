@@ -52,8 +52,17 @@ const [coverFile, setCoverFile] = useState<File | null>(null);
 
     const imageUrl = `https://ooaziodpseuwgmtgevog.supabase.co/storage/v1/object/public/uploads/${user.id}/${coverFile.name}`;
 
+    if (!form.upload_url) {
+      alert('File upload still in progress. Please wait.');
+      return;
+    }
+
     const { error } = await supabase.from('books').insert({
-      ...form,
+      title: form.title,
+      description: form.description,
+      category: form.category,
+      price: form.price,
+      content: form.upload_url,
       author_id: user.id,
       image_url: imageUrl,
     });

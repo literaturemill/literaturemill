@@ -22,6 +22,17 @@ export default function Navbar() {
   const [profileUrl, setProfileUrl] = useState<string | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const url = (e as CustomEvent<string>).detail;
+      if (typeof url === 'string') {
+        setProfileUrl(url);
+      }
+    };
+    document.addEventListener('avatar-updated', handler);
+    return () => document.removeEventListener('avatar-updated', handler);
+  }, []);
+
 useEffect(() => {
   const handleUser = async (currentUser: User | null) => {
     setUser(currentUser);
