@@ -16,8 +16,8 @@ export default function PublishPage() {
     price: '',
     content: '',
     upload_url: '',
-    image_url: '',
   });
+const [coverFile, setCoverFile] = useState<File | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -26,6 +26,11 @@ export default function PublishPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!coverFile) {
+      alert('Please select a cover image.');
+      return;
+    }
+
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -35,9 +40,24 @@ export default function PublishPage() {
       return;
     }
 
-    const { error } = await supabase
-      .from('books')
-      .insert([{ ...form, author_id: user.id }]);
+    const { data: imageUploadResult, error: imageError } = await supabase.storage
+      .from('uploads')
+      .upload(`${user.id}/${coverFile.name}`, coverFile);
+
+    if (imageError) {
+      console.error('Image upload error:', imageError);
+      alert('Image upload failed.');
+      return;
+    }
+
+    const imageUrl = `https://ooaziodpseuwgmtgevog.supabase.co/storage/v1/object/public/uploads/${user.id}/${coverFile.name}`;
+
+    const { error } = await supabase.from('books').insert({
+      ...form,
+      author_id: user.id,
+      image_url: imageUrl,
+    });
+
     if (error) {
       alert('Error submitting: ' + error.message);
       return;
@@ -51,8 +71,8 @@ export default function PublishPage() {
       price: '',
       content: '',
       upload_url: '',
-      image_url: '',
     });
+    setCoverFile(null);
   };
 
   return (
@@ -93,14 +113,7 @@ export default function PublishPage() {
         className="w-full p-3 rounded bg-gray-100 text-black placeholder-gray-500"
         />
         
-        <CoverImageUpload
-      onUpload={(url) =>
-        setForm((prev) => ({
-          ...prev,
-          image_url: url,
-        }))
-      }
-    />
+        <CoverImageUpload onSelect={(file) => setCoverFile(file)} />
 
     <RichTextEditor
     value={form.content}

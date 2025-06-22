@@ -1,50 +1,24 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '../supabaseClient';
+
 
 export default function CoverImageUpload({
-  onUpload,
+  onSelect,
 }: {
-  onUpload: (url: string) => void;
+  onSelect: (file: File) => void;
 }) {
   const [uploading, setUploading] = useState(false);
   const [fileName, setFileName] = useState('');
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setUploading(true);
     setFileName(file.name);
 
-    // Retrieve the currently logged in user
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      alert('Cover upload failed! User needs to be signed in to upload');
-      setUploading(false);
-      return;
-    }
-
-    const uploadPath = `covers/${user.id}/${Date.now()}-${file.name}`;
-
-    const { data, error } = await supabase.storage
-      .from('uploads')
-      .upload(uploadPath, file);
-
-    if (error) {
-      console.error('Upload error:', error.message);
-      alert('Cover upload failed! User needs to be signed in to upload, for other issues please contact Support');
-    } else {
-      const publicURL = supabase.storage
-        .from('uploads')
-        .getPublicUrl(data.path).data.publicUrl;
-      onUpload(publicURL);
-    }
-
+    onSelect(file);
     setUploading(false);
   };
 
