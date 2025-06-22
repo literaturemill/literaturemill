@@ -15,22 +15,35 @@ export default function FileUpload({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setUploading(true);
-    setFileName(file.name);
+    // Ensure the user is authenticated before attempting an upload
+    const {
+  data: { user },
+} = await supabase.auth.getUser();
 
-    const { data, error } = await supabase.storage
-      .from('uploads')
-      .upload(`books/${Date.now()}-${file.name}`, file);
+if (!user) {
+  alert('You must be signed in to upload files.');
+  return;
+}
 
-    if (error) {
-      console.error('Upload error:', error.message);
-      alert('File upload failed! User needs to be signed in');
-    } else {
-      const publicURL = supabase.storage
-        .from('uploads')
-        .getPublicUrl(data.path).data.publicUrl;
-      onUpload(publicURL);
-    }
+setUploading(true);
+setFileName(file.name);
+
+const filePath = `${user.id}/${Date.now()}-${file.name}`; // 🔥 Folder = user's UID
+
+const { data, error } = await supabase.storage
+  .from('uploads')
+  .upload(filePath, file);
+
+if (error) {
+  console.error('Upload error:', error.message);
+  alert('File upload failed! User needs to be signed in');
+} else {
+  const publicURL = supabase.storage
+    .from('uploads')
+    .getPublicUrl(data.path).data.publicUrl;
+  onUpload(publicURL);
+}
+
 
     setUploading(false);
   };
