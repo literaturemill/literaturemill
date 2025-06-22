@@ -24,7 +24,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
   const { data } = await supabase
     .from('books')
     .select('*')
-    .eq('category', categoryParam);
+    .ilike('category', categoryParam);
 
   const books = (data as Book[]) || [];
 

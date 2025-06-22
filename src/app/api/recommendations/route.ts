@@ -24,12 +24,13 @@ export async function GET() {
   } = await supabase.auth.getUser()
 
   if (!user) {
-    const { data: trending } = await supabase
-      .from('trending_books')
-      .select('book_id')
+    const { data } = await supabase
+      .from('books')
+      .select('id')
+      .order('created_at', { ascending: false })
       .limit(12)
 
-    return NextResponse.json(trending)
+    return NextResponse.json(data)
   }
 
   const res = await fetch(

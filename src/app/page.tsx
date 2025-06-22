@@ -7,13 +7,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Story = {
-  book_id: string;
+  id: string;
   title: string;
   description: string;
-  price: string;
+  price: number;
   image_url: string;
-  rating: number;
-  reviews: number;
+  rating?: number;
+  reviews?: number;
 };
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -21,15 +21,16 @@ export default function Home() {
   const [users, setUsers] = useState<{ id: string; username: string; avatar_url: string | null }[]>([]);
 
   useEffect(() => {
-    const fetchTrending = async () => {
+    const fetchRecent = async () => {
       const { data } = await supabase
-        .from("trending_books")
-        .select("*")
+        .from('books')
+        .select('*')
+        .order('created_at', { ascending: false })
         .limit(12);
       setStories((data as Story[]) || []);
     };
 
-    fetchTrending();
+    fetchRecent();
   }, []);
 
   useEffect(() => {
@@ -85,8 +86,16 @@ export default function Home() {
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {filteredStories.map((story, index) => (
-           <StoryCard key={index} {...story} />
+          {filteredStories.map((story) => (
+            <StoryCard
+              key={story.id}
+              title={story.title}
+              description={story.description}
+              price={`$${story.price}`}
+              image_url={story.image_url}
+              rating={story.rating ?? 0}
+              reviews={story.reviews ?? 0}
+            />
           ))}
         </div>
 

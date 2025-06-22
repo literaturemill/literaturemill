@@ -8,13 +8,13 @@ import Image from 'next/image';
 
 
 type Story = {
-  book_id: string;
+  id: string;
   title: string;
   description: string;
-  price: string;
+  price: number;
   image_url: string;
-  rating: number;
-  reviews: number;
+  rating?: number;
+  reviews?: number;
 };
 
 export default function FindPage() {
@@ -31,15 +31,22 @@ export default function FindPage() {
       setUserId(user?.id ?? null);
 
   if (user) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_FUNCTION_URL}/recommend`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user_id: user.id }),
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTION_URL}/recommend`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: user.id }),
+          }
+        );
         const data = await res.json();
         setStories(data);
       } else {
-        const { data } = await supabase.from('trending_books').select('*').limit(12);
+        const { data } = await supabase
+          .from('books')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(12);
         setStories((data as Story[]) || []);
       }
     };
@@ -47,19 +54,35 @@ export default function FindPage() {
   }, []);
 
   useEffect(() => {
-    const searchUsers = async () => {
+    const search = async () => {
       if (!query) {
         setUsers([]);
+        const { data } = await supabase
+          .from('books')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(12);
+        setStories((data as Story[]) || []);
         return;
       }
-      const { data } = await supabase
-        .from('profiles')
-        .select('id, username, avatar_url')
-        .ilike('username', `%${query}%`)
-        .limit(5);
-      setUsers((data as any[]) || []);
+      const [{ data: userData }, { data: bookData }] = await Promise.all([
+        supabase
+          .from('profiles')
+          .select('id, username, avatar_url')
+          .ilike('username', `%${query}%`)
+          .limit(5),
+        supabase
+          .from('books')
+          .select('*')
+          .ilike('title', `%${query}%`)
+          .limit(12),
+      ]);
+
+      setUsers((userData as any[]) || []);
+      setStories((bookData as Story[]) || []);
     };
-    searchUsers();
+    
+    search();
   }, [query]);
 
     const filteredStories = stories.filter((story) =>
@@ -101,7 +124,15 @@ export default function FindPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredStories.map((story) => (
-            <StoryCard key={story.book_id} {...story} />
+            <StoryCard
+              key={story.id}
+              title={story.title}
+              description={story.description}
+              price={`$${story.price}`}
+              image_url={story.image_url}
+              rating={story.rating ?? 0}
+              reviews={story.reviews ?? 0}
+            />
           ))}
         </div>
       )}
