@@ -62,7 +62,8 @@ const [coverFile, setCoverFile] = useState<File | null>(null);
       description: form.description,
       category: form.category,
       price: form.price,
-      content: form.upload_url,
+      content: form.content, // text content from editor
+      upload_url: form.upload_url, // PDF public URL
       author_id: user.id,
       image_url: imageUrl,
     });
