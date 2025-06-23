@@ -52,11 +52,10 @@ export default function Home() {
     searchUsers();
   }, [query]);
   
-  const filteredStories = stories.filter(
-    (story) =>
-      story.title.toLowerCase().includes(query.toLowerCase()) &&
-      (story.content || story.upload_url)
-  );
+  const filteredStories = stories.filter((story) =>
+  story.title.toLowerCase().includes(query.toLowerCase())
+);
+
   return (
     <>
       <main className="min-h-screen p-6">
