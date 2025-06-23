@@ -27,6 +27,7 @@ export default function Home() {
       const { data } = await supabase
         .from('books')
         .select('*')
+        .not('upload_url', 'is', null)
         .order('created_at', { ascending: false })
         .limit(12);
       setStories((data as Story[]) || []);

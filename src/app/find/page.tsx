@@ -31,21 +31,17 @@ export default function FindPage() {
       } = await supabase.auth.getUser();
       setUserId(user?.id ?? null);
 
-  if (user) {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SUPABASE_FUNCTION_URL}/recommend`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: user.id }),
-          }
-        );
+  if (user?.id) {
+        const res = await fetch(`/api/${user.id}/recommend`, {
+          method: 'POST',
+        });
         const data = await res.json();
         setStories(data);
       } else {
         const { data } = await supabase
           .from('books')
           .select('*')
+          .not('upload_url', 'is', null)
           .order('created_at', { ascending: false })
           .limit(12);
         setStories((data as Story[]) || []);
@@ -61,6 +57,7 @@ export default function FindPage() {
         const { data } = await supabase
           .from('books')
           .select('*')
+          .not('upload_url', 'is', null)
           .order('created_at', { ascending: false })
           .limit(12);
         setStories((data as Story[]) || []);
@@ -75,6 +72,7 @@ export default function FindPage() {
         supabase
           .from('books')
           .select('*')
+          .not('upload_url', 'is', null)
           .ilike('title', `%${query}%`)
           .limit(12),
       ]);

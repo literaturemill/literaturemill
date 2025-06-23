@@ -27,6 +27,7 @@ export async function GET() {
     const { data } = await supabase
       .from('books')
       .select('id')
+      .not('upload_url', 'is', null)
       .order('created_at', { ascending: false })
       .limit(12)
 
