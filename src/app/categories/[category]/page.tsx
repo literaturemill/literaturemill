@@ -13,6 +13,7 @@ type Book = {
   price: number;
   image_url: string;
   upload_url: string;
+  content?: string | null;
   rating?: number;
   reviews?: number;
 };

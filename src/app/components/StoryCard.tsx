@@ -85,9 +85,9 @@ export default function StoryCard({
               href={upload_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 transition"
+              className="text-indigo-500 underline"
             >
-              Read
+              View Uploaded Paper
             </a>
           )}
         </div>
@@ -143,9 +143,9 @@ export default function StoryCard({
               href={upload_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition"
+              className="text-indigo-500 underline"
             >
-              Read
+              View Uploaded Paper
             </a>
           )}
         </div>

@@ -13,6 +13,7 @@ type Story = {
   price: number;
   image_url: string;
   upload_url: string;
+  content?: string | null;
   rating?: number;
   reviews?: number;
 };
@@ -51,8 +52,10 @@ export default function Home() {
     searchUsers();
   }, [query]);
   
-  const filteredStories = stories.filter((story) =>
-    story.title.toLowerCase().includes(query.toLowerCase())
+  const filteredStories = stories.filter(
+    (story) =>
+      story.title.toLowerCase().includes(query.toLowerCase()) &&
+      (story.content || story.upload_url)
   );
   return (
     <>
