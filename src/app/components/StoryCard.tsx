@@ -9,8 +9,9 @@ type StoryCardProps = {
   description: string;
   price: string;
   image_url: string;
-  rating: number;         // new
-  reviews: number;        // new
+  upload_url?: string;
+  rating: number; // new
+  reviews: number; // new
 };
 
 export default function StoryCard({
@@ -18,6 +19,7 @@ export default function StoryCard({
   description,
   price,
   image_url,
+  upload_url,
   rating,
   reviews,
 }: StoryCardProps) {
@@ -77,7 +79,17 @@ export default function StoryCard({
             className="text-sm px-3 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition"
           >
             Buy Now
-          </button>
+            </button>
+            {upload_url && (
+            <a
+              href={upload_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 transition"
+            >
+              Read
+            </a>
+          )}
         </div>
 
       </div>
@@ -125,7 +137,17 @@ export default function StoryCard({
             }}
           >
             Buy Now
-          </button>
+                </button>
+                {upload_url && (
+            <a
+              href={upload_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition"
+            >
+              Read
+            </a>
+          )}
         </div>
       </div>
     </div>

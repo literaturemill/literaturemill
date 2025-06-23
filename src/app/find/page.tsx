@@ -13,6 +13,7 @@ type Story = {
   description: string;
   price: number;
   image_url: string;
+  upload_url: string;
   rating?: number;
   reviews?: number;
 };
@@ -130,6 +131,7 @@ export default function FindPage() {
               description={story.description}
               price={`$${story.price}`}
               image_url={story.image_url}
+              upload_url={story.upload_url}
               rating={story.rating ?? 0}
               reviews={story.reviews ?? 0}
             />

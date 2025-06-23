@@ -12,6 +12,7 @@ type Book = {
   description: string;
   price: number;
   image_url: string;
+  upload_url: string;
   rating?: number;
   reviews?: number;
 };
@@ -42,6 +43,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
               description={book.description}
               price={`$${book.price}`}
               image_url={book.image_url}
+              upload_url={book.upload_url}
               rating={book.rating ?? 0}
               reviews={book.reviews ?? 0}
             />
