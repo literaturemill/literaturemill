@@ -98,6 +98,7 @@ export default function Home() {
               price={`$${story.price}`}
               image_url={story.image_url}
               upload_url={story.upload_url}
+              content={story.content}
               rating={story.rating ?? 0}
               reviews={story.reviews ?? 0}
             />

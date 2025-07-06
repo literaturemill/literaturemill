@@ -46,6 +46,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
               price={`$${book.price}`}
               image_url={book.image_url}
               upload_url={book.upload_url}
+              content={book.content}
               rating={book.rating ?? 0}
               reviews={book.reviews ?? 0}
             />

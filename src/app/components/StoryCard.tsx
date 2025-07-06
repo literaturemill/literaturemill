@@ -10,6 +10,7 @@ type StoryCardProps = {
   price: string;
   image_url: string;
   upload_url?: string;
+  content?: string | null;
   rating: number; // new
   reviews: number; // new
 };
@@ -20,6 +21,7 @@ export default function StoryCard({
   price,
   image_url,
   upload_url,
+  content,
   rating,
   reviews,
 }: StoryCardProps) {
@@ -113,7 +115,24 @@ export default function StoryCard({
         unoptimized
         className="w-full h-56 object-cover rounded-md mb-4"
       />
-      <p className="text-sm mb-2 opacity-80">{description}</p>
+            <p className="text-sm mb-2 opacity-80">{description}</p>
+            {upload_url ? (
+        <a
+          href={upload_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-indigo-500 underline block mb-2"
+        >
+          View PDF
+        </a>
+      ) : (
+        content && (
+          <div
+            className="prose dark:prose-invert text-sm mb-2"
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
+        )
+      )}
       <div className="flex items-center text-yellow-400 mb-2">
         {'★'.repeat(Math.round(rating))}
         <span className="ml-2 text-sm opacity-80">({reviews} reviews)</span>
@@ -138,16 +157,7 @@ export default function StoryCard({
           >
             Buy Now
                 </button>
-                {upload_url && (
-            <a
-              href={upload_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-indigo-500 underline"
-            >
-              View Uploaded Paper
-            </a>
-          )}
+                
         </div>
       </div>
     </div>
